@@ -8,7 +8,7 @@
 QDebug operator<<(QDebug debug, const Core::AudioDevice &c)
 {
     QDebugStateSaver saver(debug);
-    debug.nospace() << '(' << c.name << ' -- ' << c.id << ')';
+    debug.nospace() << '(' << c.name << " -- " << c.id << ')';
 
     return debug;
 }
@@ -21,6 +21,8 @@ MainWindow::MainWindow(Core* core, QWidget *parent)
     , settings(CONFIG_DIR, QSettings::IniFormat)
 {
     ui->setupUi(this);
+    ui->tableTalkers->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    setWindowTitle("Flurfunk");
 
     reloadDevices();
     ui->stackedWidget->setCurrentIndex(1);
@@ -107,6 +109,7 @@ void MainWindow::onRefreshTimer()
     {
         i.next();
         count++;
+
         //cout << i.key() << ": " << i.value() << Qt::endl;
         if (ui->tableTalkers->rowCount() < count)
         {
@@ -116,7 +119,6 @@ void MainWindow::onRefreshTimer()
         }
         ui->tableTalkers->item(count - 1, 0)->setText(i.value().address.toString());
         ui->tableTalkers->item(count - 1, 1)->setText(QString("%1 ms").arg(i.value().lastActivity.elapsed()));
-
     }
 }
 
