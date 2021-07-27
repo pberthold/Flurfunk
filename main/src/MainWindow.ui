@@ -21,101 +21,83 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="pageMain">
-       <widget class="QGroupBox" name="groupBox_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>281</width>
-          <height>311</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Talker</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <item>
-          <widget class="QTableWidget" name="tableTalkers">
-           <attribute name="horizontalHeaderStretchLastSection">
-            <bool>true</bool>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <row>
-            <property name="text">
-             <string>#</string>
-            </property>
-           </row>
-           <column>
-            <property name="text">
-             <string>Address</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Last Activity</string>
-            </property>
-           </column>
-           <item row="0" column="0">
-            <property name="text">
-             <string> </string>
-            </property>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="title">
+           <string>Talker</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QTableWidget" name="tableTalkers">
+             <attribute name="horizontalHeaderStretchLastSection">
+              <bool>true</bool>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <row>
+              <property name="text">
+               <string>#</string>
+              </property>
+             </row>
+             <column>
+              <property name="text">
+               <string>Address</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Last Activity</string>
+              </property>
+             </column>
+             <item row="0" column="0">
+              <property name="text">
+               <string> </string>
+              </property>
+             </item>
+             <item row="0" column="1">
+              <property name="text">
+               <string> </string>
+              </property>
+             </item>
+            </widget>
            </item>
-           <item row="0" column="1">
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="btnListen">
             <property name="text">
-             <string> </string>
+             <string>Listen</string>
             </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QPushButton" name="btnListen">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>350</y>
-          <width>121</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Listen</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btnTalk">
-        <property name="geometry">
-         <rect>
-          <x>150</x>
-          <y>350</y>
-          <width>121</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Talk</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btnSettings">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>390</y>
-          <width>80</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Settings</string>
-        </property>
-       </widget>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnTalk">
+            <property name="text">
+             <string>Talk</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnSettings">
+          <property name="text">
+           <string>Settings</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="pageSettings">
        <layout class="QVBoxLayout" name="verticalLayout_4">

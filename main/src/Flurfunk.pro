@@ -40,3 +40,22 @@ win32:!contains(QT_ARCH, i386) {
     LIBS += -L$$$$BASS_DIR -lbass
     DEFINES += "CONFIG_DIR=\"QCoreApplication::applicationDirPath()+\\\"/settings.ini\\\"\""
 }
+
+# Android armeabi-v7a
+android {
+    BASS_DIR = $$PWD/../lib/bass/2.4.16/android_armeabi-v7a
+    INCLUDEPATH += $$BASS_DIR/
+    LIBS += -L$$$$BASS_DIR -lbass
+    DEFINES += "CONFIG_DIR=\"QCoreApplication::applicationDirPath()+\\\"/settings.ini\\\"\""
+
+    QT += androidextras
+    ANDROID_EXTRA_LIBS += $$BASS_DIR/libbass.so
+    DEFINES += "ANDROID=1"
+
+    DISTFILES += \
+        android/AndroidManifest.xml \
+        android/build.gradle \
+        android/res/values/libs.xml
+
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+}
