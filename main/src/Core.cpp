@@ -1,5 +1,6 @@
 #include "Core.h"
 #include <QNetworkDatagram>
+#include <QNetworkInterface>
 
 Core::Core(QObject *parent) : QObject(parent)
 {
@@ -174,6 +175,14 @@ void Core::onSocketRead()
     while (socket.hasPendingDatagrams())
     {
         QNetworkDatagram datagram = socket.receiveDatagram();
+
+        bool isLocal = false;
+        auto local_addresses = QNetworkInterface::allAddresses();
+        for (int i = 0; i < local_addresses.count(); i += 1)
+            if (local_addresses.at(i).toIPv4Address() == datagram.senderAddress().toIPv4Address())
+                isLocal = true;
+        if (isLocal)
+            continue;
 
         if (!talkers.contains(datagram.senderAddress().toIPv4Address()))
         {
