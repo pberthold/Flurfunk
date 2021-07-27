@@ -59,3 +59,5 @@ android {
 
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 }
+
+RC_ICONS = $$PWD/ressource/logo.ico
