@@ -1,6 +1,14 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+
+
+// Needed only for Android
 #include <QStandardPaths>
+
+// System Tray (not available for Android, but does compile... -> no define switch)
+#include <QSystemTrayIcon>
+#include <QMenu>
+#include <QAction>
 
 #include "Core.h"
 
@@ -23,6 +31,8 @@ MainWindow::MainWindow(Core* core, QWidget *parent)
     ui->setupUi(this);
     ui->tableTalkers->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     setWindowTitle("Flurfunk");
+    createTray();
+    updateTray();
 
     reloadDevices();
     ui->stackedWidget->setCurrentIndex(1);
@@ -62,6 +72,73 @@ void MainWindow::reloadDevices()
     }
 }
 
+void MainWindow::createTray()
+{
+    auto hideAction = new QAction(tr("&Hide"), this);
+    connect(hideAction, &QAction::triggered, this, [this](){
+        if (!isVisible())
+            showNormal();
+        else
+            hide();
+        updateTray();
+    });
+    hideAction->setCheckable(true);
+
+    auto playbackAction = new QAction(tr("&Playback"), this);
+    connect(playbackAction, &QAction::triggered, ui->btnListen, &QPushButton::click);
+    playbackAction->setCheckable(true);
+
+    auto recordAction = new QAction(tr("&Record"), this);
+    connect(recordAction, &QAction::triggered, ui->btnTalk, &QPushButton::click);
+    recordAction->setCheckable(true);
+
+    auto quitAction = new QAction(tr("&Quit"), this);
+    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+
+    auto trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction(hideAction);
+    //trayIconMenu->addAction(minimizeAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(playbackAction);
+    trayIconMenu->addAction(recordAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(quitAction);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setContextMenu(trayIconMenu);
+
+    trayIcon->setIcon(QIcon(":/icon/idle"));
+    connect(trayIcon, &QSystemTrayIcon::activated, this, [this](QSystemTrayIcon::ActivationReason reason)
+    {
+        switch (reason) {
+        case QSystemTrayIcon::Trigger:
+        case QSystemTrayIcon::DoubleClick:
+            ui->btnTalk->click();
+            break;
+        default:
+            break;
+        }
+    });
+}
+
+void MainWindow::updateTray()
+{
+    if (core->isRecording())
+        if (core->isPlayback())
+            trayIcon->setIcon(QIcon(":/icon/bi"));
+        else
+            trayIcon->setIcon(QIcon(":/icon/record"));
+    else
+        if (core->isPlayback())
+            trayIcon->setIcon(QIcon(":/icon/playback"));
+        else
+            trayIcon->setIcon(QIcon(":/icon/idle"));
+
+    trayIcon->contextMenu()->actions().at(0)->setChecked(!isVisible());
+    trayIcon->contextMenu()->actions().at(2)->setChecked(core->isPlayback());
+    trayIcon->contextMenu()->actions().at(3)->setChecked(core->isRecording());
+}
+
 
 void MainWindow::on_btnPlayback_clicked()
 {
@@ -97,6 +174,7 @@ void MainWindow::on_btnOK_clicked()
 {
     settings.sync();
     ui->stackedWidget->setCurrentIndex(0);
+    trayIcon->show();
 }
 
 void MainWindow::onRefreshTimer()
@@ -120,6 +198,8 @@ void MainWindow::onRefreshTimer()
         ui->tableTalkers->item(count - 1, 0)->setText(i.value().address.toString());
         ui->tableTalkers->item(count - 1, 1)->setText(QString("%1 ms").arg(i.value().lastActivity.elapsed()));
     }
+
+    updateTray();
 }
 
 void MainWindow::on_btnTalk_clicked()
@@ -136,6 +216,8 @@ void MainWindow::on_btnListen_toggled(bool checked)
     }
     else
         core->stopPlayback();
+
+    updateTray();
 }
 
 void MainWindow::on_btnTalk_toggled(bool checked)
@@ -147,10 +229,13 @@ void MainWindow::on_btnTalk_toggled(bool checked)
     }
     else
         core->stopRecording();
+
+    updateTray();
 }
 
 void MainWindow::on_btnSettings_clicked()
 {
+    trayIcon->hide();
     core->stopPlayback();
     core->stopRecording();
     ui->btnListen->setChecked(false);

@@ -11,6 +11,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class QSystemTrayIcon;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -42,6 +44,11 @@ private:
     QSettings settings;
     void reloadDevices();
     QTimer refreshTimer;
+
+private:
+    void createTray();
+    void updateTray();
+    QSystemTrayIcon* trayIcon;
 
 private:
     struct

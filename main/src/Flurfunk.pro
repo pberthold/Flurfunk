@@ -61,3 +61,6 @@ android {
 }
 
 RC_ICONS = $$PWD/ressource/logo.ico
+
+RESOURCES += \
+    ressource.qrc

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file alias="bi">ressource/icon_bi.png</file>
+        <file alias="idle">ressource/icon_idle.png</file>
+        <file alias="playback">ressource/icon_playback.png</file>
+        <file alias="record">ressource/icon_record.png</file>
+    </qresource>
+</RCC>
