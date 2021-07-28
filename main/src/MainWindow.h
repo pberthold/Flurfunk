@@ -38,6 +38,10 @@ private slots:
 
     void on_btnSettings_clicked();
 
+    void on_btnResetPlaybackDevice_clicked();
+
+    void on_btnResetRecordDevice_clicked();
+
 private:
     Ui::MainWindow *ui;
     Core* core;

@@ -141,6 +141,16 @@ void MainWindow::updateTray()
 
 void MainWindow::on_btnPlayback_clicked()
 {
+
+}
+
+void MainWindow::on_btnRecord_clicked()
+{
+
+}
+
+void MainWindow::on_btnOK_clicked()
+{
     if (ui->listPlayback->currentRow() < 0)
     {
         settings.setValue("Playback/Device/auto", true);
@@ -152,11 +162,6 @@ void MainWindow::on_btnPlayback_clicked()
         settings.setValue("Playback/Device/name", currentDevices.playback.at(ui->listPlayback->currentRow()).name);
     }
 
-    settings.sync();
-}
-
-void MainWindow::on_btnRecord_clicked()
-{
     if (ui->listRecord->currentRow() < 0)
     {
         settings.setValue("Record/Device/auto", true);
@@ -168,11 +173,6 @@ void MainWindow::on_btnRecord_clicked()
         settings.setValue("Record/Device/name", currentDevices.record.at(ui->listRecord->currentRow()).name);
     }
 
-    settings.sync();
-}
-
-void MainWindow::on_btnOK_clicked()
-{
     settings.sync();
     ui->stackedWidget->setCurrentIndex(0);
     trayIcon->show();
@@ -243,4 +243,14 @@ void MainWindow::on_btnSettings_clicked()
     ui->btnTalk->setChecked(false);
     reloadDevices();
     ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::on_btnResetPlaybackDevice_clicked()
+{
+    ui->listPlayback->setCurrentRow(-1);
+}
+
+void MainWindow::on_btnResetRecordDevice_clicked()
+{
+    ui->listRecord->setCurrentRow(-1);
 }

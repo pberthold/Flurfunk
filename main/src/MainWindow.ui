@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="pageMain">
        <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -96,9 +96,9 @@
             <widget class="QListWidget" name="listPlayback"/>
            </item>
            <item>
-            <widget class="QPushButton" name="btnPlayback">
+            <widget class="QPushButton" name="btnResetPlaybackDevice">
              <property name="text">
-              <string>Set</string>
+              <string>Clear (always use system default)</string>
              </property>
             </widget>
            </item>
@@ -115,9 +115,9 @@
             <widget class="QListWidget" name="listRecord"/>
            </item>
            <item>
-            <widget class="QPushButton" name="btnRecord">
+            <widget class="QPushButton" name="btnResetRecordDevice">
              <property name="text">
-              <string>Set</string>
+              <string>Clear (always use system default)</string>
              </property>
             </widget>
            </item>
