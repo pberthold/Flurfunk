@@ -46,7 +46,7 @@ android {
     BASS_DIR = $$PWD/../lib/bass/2.4.16/android_armeabi-v7a
     INCLUDEPATH += $$BASS_DIR/
     LIBS += -L$$$$BASS_DIR -lbass
-    DEFINES += "CONFIG_DIR=\"QCoreApplication::applicationDirPath()+\\\"/settings.ini\\\"\""
+    DEFINES += "CONFIG_DIR=\"QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)+\\\"/settings.ini\\\"\""
 
     QT += androidextras
     ANDROID_EXTRA_LIBS += $$BASS_DIR/libbass.so

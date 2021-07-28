@@ -25,7 +25,6 @@ MainWindow::MainWindow(Core* core, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , core(core)
-    //, settings(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation), QSettings::IniFormat)
     , settings(CONFIG_DIR, QSettings::IniFormat)
 {
     ui->setupUi(this);
