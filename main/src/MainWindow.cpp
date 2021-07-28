@@ -44,10 +44,14 @@ MainWindow::MainWindow(Core* core, QWidget *parent)
     else
         showPage_settings();
 
+#ifndef ANDROID
     if (settings.value("Start/StartHidden", false).toBool())
         hide();
     else
         show();
+#else
+    show();
+#endif
 
     if (settings.value("Start/ImmediatePlayback", false).toBool())
         ui->btnListen->setChecked(true);
