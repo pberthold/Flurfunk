@@ -170,7 +170,7 @@ void Core::sendRecordedData(QByteArray data)
         }
 
     if (lastTalk.elapsed() < 5000)
-        socket.writeDatagram(data, QHostAddress("255.255.255.255"), 6000);
+        socket.writeDatagram(QByteArray(1,1) + data, QHostAddress("255.255.255.255"), 6000);
 }
 
 void Core::onSocketRead()
@@ -198,15 +198,26 @@ void Core::onSocketRead()
         auto& current_talker = talkers[datagram.senderAddress().toIPv4Address()];
         current_talker.lastActivity.restart();
 
-        if (isPlayback())
+        // Action
+        if (datagram.data().count() > 0)
         {
-            if (!current_talker.stream)
+            switch (datagram.data().at(0))
             {
-                current_talker.stream = BASS_StreamCreate(24000,1,BASS_SAMPLE_8BITS,STREAMPROC_PUSH,0);
-                BASS_ChannelPlay(current_talker.stream, true);
-            }
+            case 1:
+                if (isPlayback())
+                {
+                    if (!current_talker.stream)
+                    {
+                        current_talker.stream = BASS_StreamCreate(24000,1,BASS_SAMPLE_8BITS,STREAMPROC_PUSH,0);
+                        BASS_ChannelPlay(current_talker.stream, true);
+                    }
 
-            BASS_StreamPutData(current_talker.stream, datagram.data().data(), datagram.data().count());
+                    BASS_StreamPutData(current_talker.stream, datagram.data().data() + 1, datagram.data().count() - 1);
+                }
+                break;
+            default:
+                break;
+            }
         }
     }
 
