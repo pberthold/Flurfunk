@@ -58,7 +58,7 @@ void MainWindow::reloadDevices()
     for (int i = 0; i < currentDevices.playback.count(); i += 1)
     {
         ui->listPlayback->addItem(currentDevices.playback.at(i).name);
-        if (!settings.value("Playback/Device/auto",true).toBool() && (settings.value("Playback/Device/id","").toString() == currentDevices.playback.at(i).id))
+        if (!settings.value("Playback/Device/auto",true).toBool() && (settings.value("Playback/Device/id","").toString() == currentDevices.playback.at(i).id) && (settings.value("Playback/Device/name","").toString() == currentDevices.playback.at(i).name))
             ui->listPlayback->setCurrentRow(i);
     }
 
@@ -66,7 +66,7 @@ void MainWindow::reloadDevices()
     for (int i = 0; i < currentDevices.record.count(); i += 1)
     {
         ui->listRecord->addItem(currentDevices.record.at(i).name);
-        if (!settings.value("Record/Device/auto",true).toBool() && (settings.value("Record/Device/id","").toString() == currentDevices.record.at(i).id))
+        if (!settings.value("Record/Device/auto",true).toBool() && (settings.value("Record/Device/id","").toString() == currentDevices.record.at(i).id) && (settings.value("Record/Device/name","").toString() == currentDevices.record.at(i).name))
             ui->listRecord->setCurrentRow(i);
     }
 }
@@ -149,6 +149,7 @@ void MainWindow::on_btnPlayback_clicked()
     {
         settings.setValue("Playback/Device/auto", false);
         settings.setValue("Playback/Device/id", currentDevices.playback.at(ui->listPlayback->currentRow()).id);
+        settings.setValue("Playback/Device/name", currentDevices.playback.at(ui->listPlayback->currentRow()).name);
     }
 
     settings.sync();
@@ -164,6 +165,7 @@ void MainWindow::on_btnRecord_clicked()
     {
         settings.setValue("Record/Device/auto", false);
         settings.setValue("Record/Device/id", currentDevices.record.at(ui->listRecord->currentRow()).id);
+        settings.setValue("Record/Device/name", currentDevices.record.at(ui->listRecord->currentRow()).name);
     }
 
     settings.sync();
@@ -210,7 +212,7 @@ void MainWindow::on_btnListen_toggled(bool checked)
 {
     if (checked)
     {
-        if (!core->startPlayback(settings.value("Playback/Device/auto",true).toBool(), settings.value("Playback/Device/id","").toString()))
+        if (!core->startPlayback(settings.value("Playback/Device/auto",true).toBool(), Core::AudioDevice{settings.value("Playback/Device/name","").toString(), settings.value("Playback/Device/id","").toString()}))
             ui->btnListen->setChecked(false);
     }
     else
@@ -223,7 +225,7 @@ void MainWindow::on_btnTalk_toggled(bool checked)
 {
     if (checked)
     {
-        if (!core->startRecording(settings.value("Record/Device/auto",true).toBool(), settings.value("Record/Device/id","").toString()))
+        if (!core->startRecording(settings.value("Record/Device/auto",true).toBool(), Core::AudioDevice{settings.value("Record/Device/name","").toString(), settings.value("Record/Device/id","").toString()}))
             ui->btnTalk->setChecked(false);
     }
     else

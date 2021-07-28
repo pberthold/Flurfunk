@@ -30,10 +30,10 @@ public:
     QVector<AudioDevice> getPlaybackDevices();
     QVector<AudioDevice> getRecordingDevices();
     QMap<quint32, Talker> const& getTalkers();
-    bool startRecording(bool default_device, QString device_id);
+    bool startRecording(bool default_device, AudioDevice device_id);
     void stopRecording();
     bool isRecording();
-    bool startPlayback(bool default_device, QString device_id);
+    bool startPlayback(bool default_device, AudioDevice device_id);
     void stopPlayback();
     bool isPlayback();
     void sendRecordedData(QByteArray data);

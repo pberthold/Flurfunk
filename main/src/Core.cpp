@@ -2,6 +2,11 @@
 #include <QNetworkDatagram>
 #include <QNetworkInterface>
 
+bool operator==(const Core::AudioDevice& lhs, const Core::AudioDevice& rhs)
+{
+    return (lhs.id == rhs.id) && (lhs.name == rhs.name);
+}
+
 Core::Core(QObject *parent) : QObject(parent)
 {
     connect(&socket, SIGNAL(readyRead()), this, SLOT(onSocketRead()));
@@ -57,7 +62,7 @@ BOOL CALLBACK RecordDataCallback(HRECORD handle, const void *buffer, DWORD lengt
     return TRUE; // continue recording
 }
 
-bool Core::startRecording(bool default_device, QString device_id)
+bool Core::startRecording(bool default_device, AudioDevice device_id)
 {
     if (isRecording())
         stopRecording();
@@ -68,7 +73,7 @@ bool Core::startRecording(bool default_device, QString device_id)
         QVector<Core::AudioDevice> devices = getRecordingDevices();
 
         for (int i = 0; i < devices.count(); i += 1)
-            if (devices.at(i).id == device_id)
+            if (devices.at(i) == device_id)
                 device = i;
 
         if (device == -1)
@@ -107,7 +112,7 @@ bool Core::isRecording()
     return stateIsRecording;
 }
 
-bool Core::startPlayback(bool default_device, QString device_id)
+bool Core::startPlayback(bool default_device, AudioDevice device_id)
 {
     if (isPlayback())
         stopPlayback();
@@ -118,7 +123,7 @@ bool Core::startPlayback(bool default_device, QString device_id)
         QVector<Core::AudioDevice> devices = getPlaybackDevices();
 
         for (int i = 0; i < devices.count(); i += 1)
-            if (devices.at(i).id == device_id)
+            if (devices.at(i) == device_id)
                 device = i;
 
         if (device == -1)
