@@ -47,7 +47,10 @@ private:
     Core* core;
     QSettings settings;
     void reloadDevices();
+    void reloadSettings();
     QTimer refreshTimer;
+    void showPage_settings();
+    void showPage_main();
 
 private:
     void createTray();

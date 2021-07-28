@@ -89,7 +89,7 @@
         <item>
          <widget class="QGroupBox" name="groupBox">
           <property name="title">
-           <string>Playback</string>
+           <string>Playback Device</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
@@ -108,7 +108,7 @@
         <item>
          <widget class="QGroupBox" name="groupBox_2">
           <property name="title">
-           <string>Record</string>
+           <string>Record Device</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
@@ -118,6 +118,43 @@
             <widget class="QPushButton" name="btnResetRecordDevice">
              <property name="text">
               <string>Clear (always use system default)</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_4">
+          <property name="title">
+           <string>Advanced Start</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="checkSkipSettings">
+             <property name="text">
+              <string>skip settings</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QCheckBox" name="checkImmediatePlayback">
+             <property name="text">
+              <string>immediate playback</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QCheckBox" name="checkStartHidden">
+             <property name="text">
+              <string>start hidden (tray)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QCheckBox" name="checkImmediateRecord">
+             <property name="text">
+              <string>immediate record</string>
              </property>
             </widget>
            </item>

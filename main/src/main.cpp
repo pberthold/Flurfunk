@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
     Core core;
 
     MainWindow w(&core);
-    w.show();
 
     #ifdef ANDROID
         qApp->setStyle(QStyleFactory::create("fusion"));

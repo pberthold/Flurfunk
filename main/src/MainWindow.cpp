@@ -32,15 +32,22 @@ MainWindow::MainWindow(Core* core, QWidget *parent)
     setWindowTitle("Flurfunk");
     createTray();
     updateTray();
-
-    reloadDevices();
-    ui->stackedWidget->setCurrentIndex(1);
-    //ui->tableTalkers->setColumnWidth(0, this->geometry().width() / 3);
+    trayIcon->show();
 
     connect(&refreshTimer, SIGNAL(timeout()), this, SLOT(onRefreshTimer()));
     connect(core, SIGNAL(newTalker()), this, SLOT(onRefreshTimer()));
     refreshTimer.setInterval(200);
     refreshTimer.start();
+
+    if (settings.value("Start/SkipSettings", false).toBool())
+        showPage_main();
+    else
+        showPage_settings();
+
+    if (settings.value("Start/StartHidden", false).toBool())
+        hide();
+    else
+        show();
 }
 
 MainWindow::~MainWindow()
@@ -69,6 +76,32 @@ void MainWindow::reloadDevices()
         if (!settings.value("Record/Device/auto",true).toBool() && (settings.value("Record/Device/id","").toString() == currentDevices.record.at(i).id) && (settings.value("Record/Device/name","").toString() == currentDevices.record.at(i).name))
             ui->listRecord->setCurrentRow(i);
     }
+}
+
+void MainWindow::reloadSettings()
+{
+    ui->checkSkipSettings->setChecked(settings.value("Start/SkipSettings", false).toBool());
+    ui->checkStartHidden->setChecked(settings.value("Start/StartHidden", false).toBool());
+    ui->checkImmediatePlayback->setChecked(settings.value("Start/ImmediatePlayback", false).toBool());
+    ui->checkImmediateRecord->setChecked(settings.value("Start/ImmediateRecord", false).toBool());
+}
+
+void MainWindow::showPage_settings()
+{
+    //trayIcon->hide();
+    //core->stopPlayback();
+    //core->stopRecording();
+    //ui->btnListen->setChecked(false);
+    //ui->btnTalk->setChecked(false);
+    reloadDevices();
+    reloadSettings();
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::showPage_main()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+    //trayIcon->show();
 }
 
 void MainWindow::createTray()
@@ -151,6 +184,11 @@ void MainWindow::on_btnRecord_clicked()
 
 void MainWindow::on_btnOK_clicked()
 {
+    bool wasPlaying = core->isPlayback();
+    bool wasRecording = core->isRecording();
+    on_btnListen_toggled(false);
+    on_btnTalk_toggled(false);
+
     if (ui->listPlayback->currentRow() < 0)
     {
         settings.setValue("Playback/Device/auto", true);
@@ -173,9 +211,17 @@ void MainWindow::on_btnOK_clicked()
         settings.setValue("Record/Device/name", currentDevices.record.at(ui->listRecord->currentRow()).name);
     }
 
+    settings.setValue("Start/SkipSettings", ui->checkSkipSettings->isChecked());
+    settings.setValue("Start/StartHidden", ui->checkStartHidden->isChecked());
+    settings.setValue("Start/ImmediatePlayback", ui->checkImmediatePlayback->isChecked());
+    settings.setValue("Start/ImmediateRecord", ui->checkImmediateRecord->isChecked());
+
     settings.sync();
-    ui->stackedWidget->setCurrentIndex(0);
-    trayIcon->show();
+    if (wasPlaying)
+        on_btnListen_toggled(true);
+    if (wasRecording)
+        on_btnTalk_toggled(true);
+    showPage_main();
 }
 
 void MainWindow::onRefreshTimer()
@@ -236,13 +282,7 @@ void MainWindow::on_btnTalk_toggled(bool checked)
 
 void MainWindow::on_btnSettings_clicked()
 {
-    trayIcon->hide();
-    core->stopPlayback();
-    core->stopRecording();
-    ui->btnListen->setChecked(false);
-    ui->btnTalk->setChecked(false);
-    reloadDevices();
-    ui->stackedWidget->setCurrentIndex(1);
+    showPage_settings();
 }
 
 void MainWindow::on_btnResetPlaybackDevice_clicked()
