@@ -48,6 +48,12 @@ MainWindow::MainWindow(Core* core, QWidget *parent)
         hide();
     else
         show();
+
+    if (settings.value("Start/ImmediatePlayback", false).toBool())
+        ui->btnListen->setChecked(true);
+
+    if (settings.value("Start/ImmediateRecord", false).toBool())
+        ui->btnTalk->setChecked(true);
 }
 
 MainWindow::~MainWindow()
@@ -218,9 +224,9 @@ void MainWindow::on_btnOK_clicked()
 
     settings.sync();
     if (wasPlaying)
-        on_btnListen_toggled(true);
+        on_btnListen_toggled(true); // equal to "start Playback"
     if (wasRecording)
-        on_btnTalk_toggled(true);
+        on_btnTalk_toggled(true); // equal to "start Recording"
     showPage_main();
 }
 
