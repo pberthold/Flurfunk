@@ -30,7 +30,8 @@ unix {
     BASS_DIR = $$PWD/../lib/bass/2.4.16/unix_x64
     INCLUDEPATH += $$BASS_DIR/
     LIBS += -L$$$$BASS_DIR -lbass
-    DEFINES += "CONFIG_DIR_TYPE=portable"
+    DEFINES += "CONFIG_DIR=\"QCoreApplication::applicationDirPath()+\\\"/settings.ini\\\"\""
+    QMAKE_LFLAGS += "-Wl,-rpath,\'\$$ORIGIN\'"
 }
 
 # Windows 64bit
