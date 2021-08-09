@@ -22,15 +22,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_btnPlayback_clicked();
-
-    void on_btnRecord_clicked();
 
     void on_btnOK_clicked();
 
     void onRefreshTimer();
-
-    void on_btnTalk_clicked();
 
     void on_btnListen_toggled(bool checked);
 

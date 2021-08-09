@@ -25,7 +25,7 @@
         <item>
          <widget class="QGroupBox" name="groupBox_3">
           <property name="title">
-           <string>Talker</string>
+           <string>Talkers</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>

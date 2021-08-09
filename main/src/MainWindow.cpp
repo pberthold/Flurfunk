@@ -69,7 +69,7 @@ void MainWindow::reloadDevices()
 {
     currentDevices.playback = core->getPlaybackDevices();
     currentDevices.record = core->getRecordingDevices();
-    qDebug() << currentDevices.record;
+    // qDebug() << currentDevices.record;
 
     ui->listPlayback->clear();
     for (int i = 0; i < currentDevices.playback.count(); i += 1)
@@ -98,11 +98,6 @@ void MainWindow::reloadSettings()
 
 void MainWindow::showPage_settings()
 {
-    //trayIcon->hide();
-    //core->stopPlayback();
-    //core->stopRecording();
-    //ui->btnListen->setChecked(false);
-    //ui->btnTalk->setChecked(false);
     reloadDevices();
     reloadSettings();
     ui->stackedWidget->setCurrentIndex(1);
@@ -111,7 +106,6 @@ void MainWindow::showPage_settings()
 void MainWindow::showPage_main()
 {
     ui->stackedWidget->setCurrentIndex(0);
-    //trayIcon->show();
 }
 
 void MainWindow::createTray()
@@ -139,7 +133,6 @@ void MainWindow::createTray()
 
     auto trayIconMenu = new QMenu(this);
     trayIconMenu->addAction(hideAction);
-    //trayIconMenu->addAction(minimizeAction);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(playbackAction);
     trayIconMenu->addAction(recordAction);
@@ -179,17 +172,6 @@ void MainWindow::updateTray()
     trayIcon->contextMenu()->actions().at(0)->setChecked(!isVisible());
     trayIcon->contextMenu()->actions().at(2)->setChecked(core->isPlayback());
     trayIcon->contextMenu()->actions().at(3)->setChecked(core->isRecording());
-}
-
-
-void MainWindow::on_btnPlayback_clicked()
-{
-
-}
-
-void MainWindow::on_btnRecord_clicked()
-{
-
 }
 
 void MainWindow::on_btnOK_clicked()
@@ -257,11 +239,6 @@ void MainWindow::onRefreshTimer()
     }
 
     updateTray();
-}
-
-void MainWindow::on_btnTalk_clicked()
-{
-
 }
 
 void MainWindow::on_btnListen_toggled(bool checked)
