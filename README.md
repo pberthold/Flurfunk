@@ -24,7 +24,7 @@
 - Raspberry Pi arm
 - and many more (thanks to Qt/bass)
 
-![screenshot android](docs/screenshot_android.jpg)
+![screenshot android](docs/screenshot_android.jpg | width=150)
 
 ## Build from Source
 
