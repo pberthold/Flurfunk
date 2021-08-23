@@ -1,4 +1,5 @@
 # Flurfunk
+
 ## _Low-latency audio communication on local network_
 
 `Flurfunk` provides software for local area network audio communication based on UDP broadcasts. This allows for a very simple but fast audio communication without the need of any central server unit or Internet access. The audio stream is optimized for voice (8bit, 24kHz) and roughly takes 1.5MByte per minute per active (speaking) client. The audio data is uncompressed and pulse-coded (PCM) to increase robustness in mobile applications with weak WiFi signal strength.
@@ -42,3 +43,5 @@ make
 ## Releases
 
 The releases come with the dependencies and should run out of the box. The application settings are stored in the folder of the executable (100% portable).
+
+<img src="main/src/ressource/icon_idle.png">
