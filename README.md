@@ -1,15 +1,17 @@
 # Flurfunk
 ## _Low-latency audio communication on local network_
 
-`Flurfunk` provides software for local area network audio communication based on UDP broadcasts. This allows for a very simple but fast audio communication without Internet access. The audio stream is optimized for voice (8bit, 24kHz) and roughly takes 1.5MByte per minute per active (speaking) client.
+`Flurfunk` provides software for local area network audio communication based on UDP broadcasts. This allows for a very simple but fast audio communication without the need of any central server unit or Internet access. The audio stream is optimized for voice (8bit, 24kHz) and roughly takes 1.5MByte per minute per active (speaking) client. The audio data is uncompressed and pulse-coded (PCM) to increase robustness in mobile applications with weak WiFi signal strength.
 
 ![flurfunk overview](docs/overview.svg)
 
 ## Features
 
 - UDP broadcasts (no central server needed)
-- Low latency and low data bandwidth
-- Protocol frame for future extensions
+- Low latency and uncompressed
+- Protocol frame for backwards-compatibility of future extensions
+- Configuration for audio devices and startup behaviour
+- Portable (settings stored in ini-file)
 
 ## Dependencies
 
@@ -24,7 +26,7 @@
 - Raspberry Pi arm
 - and many more (thanks to Qt/bass)
 
-![screenshot android](docs/screenshot_android.jpg | width=150)
+<img src="docs/screenshot_android.jpg" width="240px">
 
 ## Build from Source
 
