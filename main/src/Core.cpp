@@ -10,7 +10,7 @@ bool operator==(const Core::AudioDevice& lhs, const Core::AudioDevice& rhs)
 Core::Core(QObject *parent) : QObject(parent)
 {
     connect(&socket, SIGNAL(readyRead()), this, SLOT(onSocketRead()));
-    socket.bind(6000);
+    socket.bind(6000, QAbstractSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
 }
 
 Core::~Core()
